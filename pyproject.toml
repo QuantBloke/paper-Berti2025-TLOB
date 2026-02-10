@@ -1,0 +1,64 @@
+[project]
+name = "paper-berti2025-tlob"
+version = "0.1.0"
+description = "Transformer LOB: a deep learning model for limit order book mid-price prediction"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "einops",
+    "hydra-core",
+    "lightning",
+    "lion-pytorch",
+    "matplotlib",
+    "numpy",
+    "omegaconf",
+    "pandas",
+    "pytorch-lightning",
+    "requests",
+    "scikit-learn",
+    "scipy",
+    "seaborn",
+    "torch==2.5.0",
+    "torch-ema",
+    "transformers",
+    "wandb",
+    "kagglehub",
+    "onnx",
+    "onnxruntime-gpu; sys_platform == 'linux'",
+    "onnxruntime; sys_platform != 'linux'",
+]
+
+[tool.uv]
+managed = true
+python-preference = "system"
+preview = true
+
+[[tool.uv.index]]
+name = "pytorch-cu121"
+url = "https://download.pytorch.org/whl/cu121"
+explicit = true
+
+[tool.uv.sources]
+torch = [
+    { index = "pytorch-cu121", marker = "sys_platform == 'linux'" },
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-select = ["I"]
+fix = true
+unsafe-fixes = false
+exclude = [".git", ".venv", "build", "dist", "__pycache__", "data"]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+force-wrap-aliases = true
+
+[tool.pyright]
+typeCheckingMode = "strict"
+include = ["models", "preprocessing", "utils", "config"]
+venvPath = "."
+venv = ".venv"
+reportMissingImports = true
+reportMissingTypeStubs = false
